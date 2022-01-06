@@ -16,7 +16,7 @@ import javax.validation.Valid;
 public class UploadForm {
     @Valid
     @URL(regexp="(\\/\\/.*\\.(?:png|jpg))", message="Avatar must be an end with .jpg or .png")
-    private MultipartFile avatar;
+    private MultipartFile image;
 
     private MultipartFile fileData;
 }

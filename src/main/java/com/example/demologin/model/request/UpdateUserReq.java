@@ -23,6 +23,8 @@ public class UpdateUserReq {
     @Pattern(regexp = "[0-9]+" , message = "Please provide a valid phone number")
     private String phone;
 
+    private String address;
+
     @Valid
     @URL(regexp="(\\/\\/.*\\.(?:png|jpg))", message="Avatar must be an url image")
     private String avatar;

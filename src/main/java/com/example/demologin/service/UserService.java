@@ -11,13 +11,7 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    public User createUser(CreateUserReq req);
-    List<User> allInfo();
-//    List<UserDto> getListUser();
-//    UserDto getUserbyID(int id);
-//    UserDto Login(String username, String password);
-//    UserDto CreateUser(CreateUserReq user);
-//    UserDto UpdateUser(UpdateUserReq user, int id);
-//    UserDto UpdatePassword(PasswordUpdateReq user, int id);
-//    List<UserDto> DeleteUser(int id);
+    User createUser(CreateUserReq req);
+    UserDto UpdateUser(UpdateUserReq req, User user);
+    String UpdatePassword(PasswordUpdateReq req, User user);
 }

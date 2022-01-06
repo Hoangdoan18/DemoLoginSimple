@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ShortProducInfoDto {
+public class ShortProductInfoDto {
     private String id;
 
     private String name;
@@ -19,13 +19,13 @@ public class ShortProducInfoDto {
 
     private List<Integer> availableSizes;
 
-    public ShortProducInfoDto(String id, String name) {
+    public ShortProductInfoDto(String id, String name) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    public ShortProducInfoDto(String id, String name, long price, Object availableSizes) {
+    public ShortProductInfoDto(String id, String name, long price, Object availableSizes) {
         this.id = id;
         this.name = name;
         this.price = price;
