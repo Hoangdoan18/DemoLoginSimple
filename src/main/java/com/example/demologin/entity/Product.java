@@ -174,8 +174,8 @@ public class Product {
     @Column(name = "is_available", columnDefinition = "TINYINT(1)")
     private boolean isAvailable;
 
-    @Column(name = "create_at", nullable = false)
-    private Date create_at;
+    @Column(name = "created_at", nullable = false)
+    private Date created_at;
 
     @Column(name = "price")
     private long price;
@@ -195,7 +195,7 @@ public class Product {
     @JoinTable(
             name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "categoruy_id")
+            inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
 }

@@ -31,8 +31,8 @@ public class Image {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "upload_at")
-    private Timestamp uploadAt;
+    @Column(name = "uploaded_at")
+    private Timestamp uploadedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uploaded_by")

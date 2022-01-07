@@ -57,8 +57,8 @@ public class User implements Serializable {
     @Column(name = "status", columnDefinition = "BOOLEAN NOT NULL")
     private boolean status;
 
-    @Column(name = "create_at", nullable = false)
-    private Timestamp createAt;
+    @Column(name = "created_at", nullable = false)
+    private Timestamp createdAt;
 //    @OneToOne
 //    @JoinColumn(name = "identity_card_id")
 //    private IdentityCard identityCard;

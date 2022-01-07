@@ -20,23 +20,34 @@ import java.util.Locale;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handlerNotFoundException(NotFoundException ex, WebRequest req){
-        return new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<?> handlerNotFoundException(NotFoundException ex, WebRequest req){
+        ErrorResponse err = new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ResponseEntity<>(err,HttpStatus.NOT_FOUND);
     }
 
 
     @ExceptionHandler(DuplicateRecordException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handlerDuplicateRecordException(DuplicateRecordException ex, WebRequest req){
-        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    public ResponseEntity<?> handlerDuplicateRecordException(DuplicateRecordException ex, WebRequest req){
+        ErrorResponse err = new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(err,HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<?> handlerBadRequestException(BadRequestException ex, WebRequest req){
+        ErrorResponse err = new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(err,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InternalServerException.class)
+    public ResponseEntity<?> handlerInternalServerException(DuplicateRecordException ex, WebRequest req){
+        ErrorResponse err = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return new ResponseEntity<>(err,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handlerException(Exception ex, WebRequest req){
-        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    public ResponseEntity<?> handlerException(Exception ex, WebRequest req){
+        ErrorResponse err = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return new ResponseEntity<>(err,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Autowired

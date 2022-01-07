@@ -22,7 +22,7 @@ public class ShortProductInfoDto {
     public ShortProductInfoDto(String id, String name) {
         this.id = id;
         this.name = name;
-        this.price = price;
+        this.price = price; // ????
     }
 
     public ShortProductInfoDto(String id, String name, long price, Object availableSizes) {

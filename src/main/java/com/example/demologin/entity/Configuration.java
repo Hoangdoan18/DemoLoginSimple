@@ -23,5 +23,5 @@ public class Configuration {
 
     @Type(type = "json")
     @Column(name = "obo_choices",columnDefinition = "json")
-    private List<Product> obo_choices;
+    private List<String> obo_choices;
 }

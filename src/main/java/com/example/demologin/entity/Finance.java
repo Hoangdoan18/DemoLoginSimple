@@ -24,12 +24,12 @@ public class Finance {
     @Column(name = "amount", nullable = false)
     private long amount;
 
-    @Column(name = "create_at")
-    private Timestamp createAt;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "create_by")
-    private User createBy;
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

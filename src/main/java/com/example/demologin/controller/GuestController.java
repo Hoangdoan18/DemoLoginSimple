@@ -1,6 +1,7 @@
 package com.example.demologin.controller;
 
 import com.example.demologin.entity.User;
+import com.example.demologin.exception.BadRequestException;
 import com.example.demologin.exception.DuplicateRecordException;
 import com.example.demologin.model.mapper.UserMapper;
 import com.example.demologin.model.request.AuthenticateReq;
@@ -62,7 +63,7 @@ public class GuestController {
 
             return ResponseEntity.ok(token);
         }catch (Exception ex) {
-            throw new DuplicateRecordException("Email or password wrong.");
+            throw new BadRequestException("Email or password wrong.");
         }
     }
 

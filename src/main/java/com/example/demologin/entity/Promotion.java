@@ -24,8 +24,8 @@ public class Promotion {
     @Column(name = "coupon_code",unique = true, nullable = false)
     private String couponCode;
 
-    @Column(name = "create_at")
-    private Timestamp createAt;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
     @Column(name = "discount_type")
     private int discountType;

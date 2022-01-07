@@ -29,7 +29,7 @@ public class UserMapper {
         // Hash password using BCrypt
         String hash = BCrypt.hashpw(req.getPassword(), BCrypt.gensalt(12));
         user.setPassword(hash);
-        user.setCreateAt(new Timestamp(System.currentTimeMillis()));
+        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         user.setStatus(true);
         user.setRole(new ArrayList<String>(Arrays.asList("USER")));
 
