@@ -2,7 +2,6 @@ package com.example.demologin.service.impl;
 
 import com.example.demologin.entity.User;
 import com.example.demologin.exception.DuplicateRecordException;
-import com.example.demologin.exception.NotFoundException;
 import com.example.demologin.model.dto.UserDto;
 import com.example.demologin.model.mapper.UserMapper;
 import com.example.demologin.model.request.CreateUserReq;

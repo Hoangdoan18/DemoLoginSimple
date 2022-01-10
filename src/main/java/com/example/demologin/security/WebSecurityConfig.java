@@ -1,12 +1,9 @@
 package com.example.demologin.security;
 
-import com.example.demologin.security.JwtRequestFilter;
-import com.example.demologin.security.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
-import org.springframework.http.HttpMethod;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -53,18 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/api/order", "/info/**").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/register", "/authenticate", "/hello", "/product/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/signout")
                 .logoutSuccessUrl("/hello")
                 .deleteCookies("JWT_TOKEN")
-                .and()
-                .logout()
-                .logoutUrl("/sign-out")
-                .logoutSuccessUrl("/hello")
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)

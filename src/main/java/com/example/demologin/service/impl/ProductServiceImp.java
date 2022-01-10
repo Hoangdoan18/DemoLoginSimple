@@ -2,16 +2,20 @@ package com.example.demologin.service.impl;
 
 import com.example.demologin.entity.Configuration;
 import com.example.demologin.entity.Product;
+import com.example.demologin.entity.ProductSize;
 import com.example.demologin.exception.NotFoundException;
 import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
+import com.example.demologin.model.dto.ShortProductInfoDto;
 import com.example.demologin.model.mapper.ProductMapper;
 import com.example.demologin.repository.ConfigurationRepository;
 import com.example.demologin.repository.ProductRepository;
+import com.example.demologin.repository.ProductSizeRepository;
 import com.example.demologin.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +23,9 @@ import java.util.Optional;
 public class ProductServiceImp implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
 
     @Autowired
     private ConfigurationRepository configurationRepository;
@@ -80,5 +87,35 @@ public class ProductServiceImp implements ProductService {
 
         List<ProductInfoDto> products = productRepository.getRelatedProducts(id, 5);
         return products;
+    }
+
+    @Override
+    public List<Integer> getListAvailableSize(String id) {
+        return productSizeRepository.findAllSizeOfProduct(id);
+    }
+
+    public Pageable searchProductByKeyword(String keyword, Integer page) {
+        if (keyword == null) keyword = "";
+
+        if (page == null)  page = 1;
+
+        int limit = 15;
+
+        return null;
+    }
+
+    @Override
+    public List<ProductSize> getListSizeOfProduct(String id) {
+        return productSizeRepository.findByProductId(id);
+    }
+
+    @Override
+    public List<ShortProductInfoDto> getAllProduct() {
+        return null;
+    }
+
+    @Override
+    public List<ShortProductInfoDto> getAvailableProducts() {
+        return null;
     }
 }

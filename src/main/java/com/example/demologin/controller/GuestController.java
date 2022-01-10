@@ -2,7 +2,6 @@ package com.example.demologin.controller;
 
 import com.example.demologin.entity.User;
 import com.example.demologin.exception.BadRequestException;
-import com.example.demologin.exception.DuplicateRecordException;
 import com.example.demologin.model.mapper.UserMapper;
 import com.example.demologin.model.request.AuthenticateReq;
 import com.example.demologin.model.request.CreateUserReq;
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +37,8 @@ public class GuestController {
 
     @GetMapping("/hello")
     public ResponseEntity<?> getAllUser(){
-        return ResponseEntity.ok("Hello");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(authentication.getAuthorities());
     }
 
     @PostMapping("/authenticate")
@@ -56,6 +57,7 @@ public class GuestController {
 
             //Generate token
             String token = jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+
             Cookie cookie = new Cookie("JWT_TOKEN", token.replace(" ", ""));
             cookie.setMaxAge(3600);
             cookie.setPath("/");

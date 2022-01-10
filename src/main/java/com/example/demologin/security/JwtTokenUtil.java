@@ -2,6 +2,7 @@ package com.example.demologin.security;
 
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,7 @@ public class JwtTokenUtil {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + duration * 1000))
-                .signWith(SignatureAlgorithm.HS512, "JWT")
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
 
         return PREFIX + token;
@@ -47,8 +48,11 @@ public class JwtTokenUtil {
     public Claims getClaimsFromToken(String token){
         // Check token
         if (token == null || !token.startsWith(PREFIX)) return null;
-
-        token = token.replace(PREFIX, "");
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        try {
+            token = token.replace(PREFIX, "");
+            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            return null;
+        }
     }
 }
