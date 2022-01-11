@@ -18,6 +18,7 @@ public class UserMapper {
         udto.setEmail(user.getEmail());
         udto.setPhone(user.getPhone());
         udto.setAvatar(user.getAvatar());
+        udto.setRoles(user.getRole());
         return udto;
     }
 

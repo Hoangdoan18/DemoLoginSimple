@@ -2,17 +2,22 @@ package com.example.demologin.controller;
 
 import com.example.demologin.model.dto.PostInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
+import com.example.demologin.model.request.FilterProductReq;
 import com.example.demologin.repository.ProductRepository;
 import com.example.demologin.service.ProductService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
@@ -23,7 +28,7 @@ public class ProductController {
     @GetMapping("/")
     public String indexPage(Model model){
         // Get 5 updated products
-        List<ProductInfoDto> updated = productService.getListNewProduct();
+        List<ProductInfoDto> updated = productService.getListNewProducts();
         model.addAttribute("updated", updated);
 
         // Get 5 bestseller products
@@ -39,4 +44,26 @@ public class ProductController {
         model.addAttribute("suggest", suggest);
         return "index";
     }
- }
+
+    @GetMapping("/updated-products")
+    public ResponseEntity<?> getListUpdatedProducts(){
+        return ResponseEntity.ok(productService.getListNewProducts());
+    }
+
+    @GetMapping("/bestseller-products")
+    public ResponseEntity<?> getListBestSellerProducts(){
+        return ResponseEntity.ok(productService.getListBestSellerProduct());
+    }
+
+    @GetMapping("/obosuggest-products")
+    public ResponseEntity<?> getListSuggestProducts(){
+        List<ProductInfoDto> products = productService.getListSuggestProduct();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/product")
+    public ResponseEntity<?> getFilterListProduct(@RequestBody FilterProductReq req, @RequestParam int page) {
+
+        return null;
+    }
+}

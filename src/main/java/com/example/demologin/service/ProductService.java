@@ -5,6 +5,7 @@ import com.example.demologin.entity.ProductSize;
 import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
 import com.example.demologin.model.dto.ShortProductInfoDto;
+import com.example.demologin.model.request.FilterProductReq;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ProductService {
     Product addProduct(Product product);
 
-    List<ProductInfoDto> getListNewProduct();
+    List<ProductInfoDto> getListNewProducts();
 
     List<ProductInfoDto> getListBestSellerProduct();
 
@@ -33,4 +34,6 @@ public interface ProductService {
     List<ShortProductInfoDto> getAllProduct();
 
     List<ShortProductInfoDto> getAvailableProducts();
+
+    List<ProductInfoDto> filterProduct(FilterProductReq req);
 }

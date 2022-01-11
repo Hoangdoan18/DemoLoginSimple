@@ -16,4 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     @Query(nativeQuery = true, value = "Select 1 from product_category where category_id = ?1")
     public int checkProductInCategory(int id);
+
+    @Query(nativeQuery = true, value = "SELECT category_id FROM category")
+    List<Integer> getAllCategoryID();
 }

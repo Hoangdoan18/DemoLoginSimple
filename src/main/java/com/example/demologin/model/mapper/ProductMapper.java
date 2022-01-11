@@ -2,11 +2,14 @@ package com.example.demologin.model.mapper;
 
 import com.example.demologin.entity.Product;
 import com.example.demologin.model.dto.DetailProductInfoDto;
-import com.example.demologin.model.dto.ProductInfoDto;
+
 
 import java.util.ArrayList;
 
 public class ProductMapper {
+//    @Autowired
+//    private ModelMapper modelMapper;
+
     public static DetailProductInfoDto toDetailProductInfoDto(Product product) {
         DetailProductInfoDto detailProductInfoDto = new DetailProductInfoDto();
         detailProductInfoDto.setId(product.getId());
@@ -19,6 +22,16 @@ public class ProductMapper {
 //        detailProductInfoDto.setCouponCode();
         detailProductInfoDto.setDescription(product.getDescription());
         detailProductInfoDto.setBrand(product.getBrandId());
-        return null;
+        return detailProductInfoDto;
     }
+
+//    public ProductInfoDto toProductInfoDto(Product product) {
+//        ProductInfoDto dto = modelMapper.map(product, ProductInfoDto.class);
+//        return dto;
+//    }
+//
+//    public ShortProductInfoDto toShortProductInfoDto(Product product) {
+//        ShortProductInfoDto dto = modelMapper.map(product, ShortProductInfoDto.class);
+//        return dto;
+//    }
 }

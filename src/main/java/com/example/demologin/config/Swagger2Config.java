@@ -20,4 +20,5 @@ public class Swagger2Config {
             .paths(PathSelectors.any())
             .build();
     }
+
 }

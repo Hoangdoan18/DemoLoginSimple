@@ -8,9 +8,8 @@ import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
 import com.example.demologin.model.dto.ShortProductInfoDto;
 import com.example.demologin.model.mapper.ProductMapper;
-import com.example.demologin.repository.ConfigurationRepository;
-import com.example.demologin.repository.ProductRepository;
-import com.example.demologin.repository.ProductSizeRepository;
+import com.example.demologin.model.request.FilterProductReq;
+import com.example.demologin.repository.*;
 import com.example.demologin.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,13 +29,20 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private ConfigurationRepository configurationRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    /*******************************/
     @Override
     public Product addProduct(Product product){
         return null;
     }
 
     @Override
-    public List<ProductInfoDto> getListNewProduct() {
+    public List<ProductInfoDto> getListNewProducts() {
         return productRepository.getListNewProduct(5);
     }
 
@@ -116,6 +122,27 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<ShortProductInfoDto> getAvailableProducts() {
+        return null;
+    }
+
+    @Override
+    public List<ProductInfoDto> filterProduct(FilterProductReq req) {
+        if (req.getBrands() == null) {
+            req.setBrands(brandRepository.getAllBrandID());
+        }
+
+        if (req.getCategories() == null) {
+            req.setCategories(categoryRepository.getAllCategoryID());
+        }
+
+        if (req.getMaxPrice() == null) {
+            req.setMaxPrice(Long.MAX_VALUE);
+        }
+
+        if (req.getMinPrice() == null) {
+            req.setMinPrice(0l);
+        }
+
         return null;
     }
 }

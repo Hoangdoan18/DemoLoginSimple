@@ -71,7 +71,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (username != null) {
             UserDetails user = userDetailsService.loadUserByUsername(username);
-            return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(user, user, user.getAuthorities());
         }
         return null;
     }

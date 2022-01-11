@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -18,12 +19,12 @@ import java.util.List;
                         classes = @ConstructorResult(
                                 targetClass = ProductInfoDto.class,
                                 columns = {
-                                        @ColumnResult(name = "id", type = Integer.class),
+                                        @ColumnResult(name = "id", type = String.class),
                                         @ColumnResult(name = "name", type = String.class),
                                         @ColumnResult(name = "slug", type = String.class),
                                         @ColumnResult(name = "price", type = Long.class),
-                                        @ColumnResult(name = "totalSold", type = Integer.class),
-                                        @ColumnResult(name = "promotionPrice", type = Integer.class)
+                                        @ColumnResult(name = "total_sold", type = Integer.class),
+                                        @ColumnResult(name = "image", type = String.class)
                                 }
                         )
                 ),
@@ -175,7 +176,7 @@ public class Product {
     private boolean isAvailable;
 
     @Column(name = "created_at", nullable = false)
-    private Date created_at;
+    private Timestamp created_at;
 
     @Column(name = "price")
     private long price;

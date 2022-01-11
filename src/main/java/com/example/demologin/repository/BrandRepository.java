@@ -12,4 +12,7 @@ import java.util.List;
 public interface BrandRepository extends JpaRepository<Brand, Integer> {
     @Query(nativeQuery = true, name = "getListBrandAndProductCount")
     public List<BrandInfo> getListBrandAndProductCount();
+
+    @Query(nativeQuery = true, value = "SELECT brand_id FROM brand")
+    List<Integer> getAllBrandID();
 }

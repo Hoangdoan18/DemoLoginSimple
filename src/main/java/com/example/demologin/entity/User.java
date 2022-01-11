@@ -51,7 +51,7 @@ public class User implements Serializable {
 
     //DEFAULT = USER
     @Type(type = "json") // define json type to this field
-    @Column(name = "roles",columnDefinition = "json NOT NULL")
+    @Column(name = "roles",nullable = false ,columnDefinition = "json")
     private List<String> role;
 
     @Column(name = "status", columnDefinition = "BOOLEAN NOT NULL")
