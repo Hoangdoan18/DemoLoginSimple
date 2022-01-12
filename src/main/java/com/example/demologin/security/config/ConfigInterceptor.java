@@ -1,5 +1,6 @@
-package com.example.demologin.security;
+package com.example.demologin.security.config;
 
+import com.example.demologin.security.user.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

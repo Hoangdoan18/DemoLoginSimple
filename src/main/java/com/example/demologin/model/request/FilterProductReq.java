@@ -21,7 +21,7 @@ public class FilterProductReq {
     @JsonProperty("max_price")
     private Long maxPrice;
 
-    private int limit;
+    private List<Integer> size;
 
-    private int offset;
+    private int page;
 }

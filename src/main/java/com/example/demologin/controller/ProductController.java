@@ -6,6 +6,7 @@ import com.example.demologin.model.request.FilterProductReq;
 import com.example.demologin.repository.ProductRepository;
 import com.example.demologin.service.ProductService;
 
+import com.example.demologin.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -62,8 +63,9 @@ public class ProductController {
     }
 
     @GetMapping("/product")
-    public ResponseEntity<?> getFilterListProduct(@RequestBody FilterProductReq req, @RequestParam int page) {
+    public ResponseEntity<?> getFilterListProduct(@RequestBody FilterProductReq req) {
 
-        return null;
+        List<ProductInfoDto> products = productService.filterProduct(req);
+        return ResponseEntity.ok(products);
     }
 }

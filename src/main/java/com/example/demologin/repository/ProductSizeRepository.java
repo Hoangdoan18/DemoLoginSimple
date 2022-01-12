@@ -17,6 +17,9 @@ public interface ProductSizeRepository extends JpaRepository<ProductSize, Long> 
     @Query(nativeQuery = true, value = "SELECT * FROM product_size WHERE product_id = ?1 AND size = ?2 AND quantity > 0")
     public ProductSize checkProductSizeAvailable(String productId, int size);
 
+    @Query(nativeQuery = true, value = "SELECT DISTINCT size FROM product_size ")
+    public List<Integer> getAllSize();
+
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "Delete from product_size where product_id = ?1")

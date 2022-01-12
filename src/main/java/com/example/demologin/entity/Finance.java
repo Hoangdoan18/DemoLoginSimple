@@ -33,6 +33,6 @@ public class Finance {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private User orderId;
+    private Order orderId;
 }
 

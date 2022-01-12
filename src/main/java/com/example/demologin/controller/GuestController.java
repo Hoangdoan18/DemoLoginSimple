@@ -5,15 +5,14 @@ import com.example.demologin.exception.BadRequestException;
 import com.example.demologin.model.mapper.UserMapper;
 import com.example.demologin.model.request.AuthenticateReq;
 import com.example.demologin.model.request.CreateUserReq;
-import com.example.demologin.security.CustomUserDetails;
-import com.example.demologin.security.JwtTokenUtil;
+import com.example.demologin.security.user.CustomUserDetails;
+import com.example.demologin.security.JWT.JwtTokenUtil;
 import com.example.demologin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +58,7 @@ public class GuestController {
             String token = jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
 
             Cookie cookie = new Cookie("JWT_TOKEN", token.replace(" ", ""));
-            cookie.setMaxAge(3600);
+            cookie.setMaxAge(1000000000);
             cookie.setPath("/");
             response.addCookie(cookie);
 
@@ -79,7 +78,7 @@ public class GuestController {
 
         // Add token to cookie to login
         Cookie cookie = new Cookie("JWT_TOKEN",token.replace(" ",""));
-        cookie.setMaxAge(3600);
+        cookie.setMaxAge(1000000000);
         cookie.setPath("/");
         response.addCookie(cookie);
 

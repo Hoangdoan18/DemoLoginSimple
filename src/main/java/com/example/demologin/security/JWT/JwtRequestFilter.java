@@ -1,6 +1,7 @@
-package com.example.demologin.security;
+package com.example.demologin.security.JWT;
 
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -37,13 +39,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             token = cookie.getValue();
         } else {
             filterChain.doFilter(request, response);
+            log.error("Cookie null.");
             return;
         }
 
-        // Parse information from token
+        // Parse claims from token
         Claims claims = jwtTokenUtil.getClaimsFromToken(token);
         if (claims == null) {
             filterChain.doFilter(request,response);
+            log.error("Invalid JWT token.");
             return;
         }
 
@@ -51,6 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         Date expiration = claims.getExpiration();
         if (expiration.before(new Date())) {
             filterChain.doFilter(request,response);
+            log.error("Expired JWT token.");
             return;
         }
 
@@ -66,12 +71,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         filterChain.doFilter(request,response);
     }
 
+    // Get information from token
     private UsernamePasswordAuthenticationToken getAuthentication(Claims claims) {
         String username = claims.getSubject();
 
         if (username != null) {
             UserDetails user = userDetailsService.loadUserByUsername(username);
-            return new UsernamePasswordAuthenticationToken(user, user, user.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         }
         return null;
     }

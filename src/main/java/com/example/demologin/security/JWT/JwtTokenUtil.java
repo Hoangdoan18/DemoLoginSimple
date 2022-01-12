@@ -1,4 +1,4 @@
-package com.example.demologin.security;
+package com.example.demologin.security.JWT;
 
 
 import io.jsonwebtoken.Claims;

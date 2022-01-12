@@ -1,6 +1,7 @@
 package com.example.demologin.controller;
 
-import com.example.demologin.security.JwtTokenUtil;
+import com.example.demologin.entity.User;
+import com.example.demologin.security.JWT.JwtTokenUtil;
 import com.example.demologin.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,6 @@ public class UserController {
 
     @GetMapping("/api/info")
     public ResponseEntity<?> getUserInfo(){
-        return ResponseEntity.ok(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return ResponseEntity.ok((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }

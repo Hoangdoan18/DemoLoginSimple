@@ -11,6 +11,7 @@ import com.example.demologin.model.mapper.ProductMapper;
 import com.example.demologin.model.request.FilterProductReq;
 import com.example.demologin.repository.*;
 import com.example.demologin.service.ProductService;
+import com.example.demologin.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -127,22 +128,27 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<ProductInfoDto> filterProduct(FilterProductReq req) {
+        int limit = 8;
         if (req.getBrands() == null) {
             req.setBrands(brandRepository.getAllBrandID());
         }
-
         if (req.getCategories() == null) {
             req.setCategories(categoryRepository.getAllCategoryID());
         }
-
+        if(req.getSize() == null) {
+            req.setSize(productSizeRepository.getAllSize());
+        }
         if (req.getMaxPrice() == null) {
             req.setMaxPrice(Long.MAX_VALUE);
         }
-
         if (req.getMinPrice() == null) {
             req.setMinPrice(0l);
         }
 
-        return null;
+        PageUtil pageUtil = new PageUtil(limit, req.getPage());
+        List<ProductInfoDto> products = productRepository.searchProductAllSize(req.getBrands(),req.getCategories(),
+                req.getMinPrice(), req.getMaxPrice(),limit, pageUtil.offset());
+
+        return products;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.demologin.security;
+package com.example.demologin.security.user;
 
 import com.example.demologin.entity.User;
 import com.example.demologin.repository.UserRepository;
