@@ -1,10 +1,8 @@
 package com.example.demologin.security.JWT;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -14,8 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class JwtTokenUtil {
-    public static final String PREFIX = "Bearer ";
+    public static final String PREFIX = "Bearer";
 
     // Set expired time for token, count by number of seconds
     @Value("${jwt.duration}")
@@ -51,8 +50,15 @@ public class JwtTokenUtil {
         try {
             token = token.replace(PREFIX, "");
             return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException e) {
-            return null;
+        } catch (MalformedJwtException ex) {
+            log.error("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            log.error("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            log.error("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            log.error("JWT claims string is empty.");
         }
+        return null;
     }
 }

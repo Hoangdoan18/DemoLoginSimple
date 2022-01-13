@@ -15,13 +15,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-@RestController
+@Controller
 @RequestMapping("")
 public class GuestController {
 
@@ -37,7 +39,7 @@ public class GuestController {
     @GetMapping("/hello")
     public ResponseEntity<?> getAllUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return ResponseEntity.ok(authentication.getAuthorities());
+        return ResponseEntity.ok(authentication.getPrincipal());
     }
 
     @PostMapping("/authenticate")
@@ -56,13 +58,14 @@ public class GuestController {
 
             //Generate token
             String token = jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+            CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
-            Cookie cookie = new Cookie("JWT_TOKEN", token.replace(" ", ""));
+            Cookie cookie = new Cookie("JWT_TOKEN", token);
             cookie.setMaxAge(1000000000);
             cookie.setPath("/");
             response.addCookie(cookie);
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(principal);
         }catch (Exception ex) {
             throw new BadRequestException("Email or password wrong.");
         }
@@ -77,7 +80,7 @@ public class GuestController {
         String token = jwtTokenUtil.generateToken(principal);
 
         // Add token to cookie to login
-        Cookie cookie = new Cookie("JWT_TOKEN",token.replace(" ",""));
+        Cookie cookie = new Cookie("JWT_TOKEN",token);
         cookie.setMaxAge(1000000000);
         cookie.setPath("/");
         response.addCookie(cookie);

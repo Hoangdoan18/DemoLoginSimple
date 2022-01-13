@@ -3,6 +3,7 @@ package com.example.demologin.service.impl;
 import com.example.demologin.entity.Configuration;
 import com.example.demologin.entity.Product;
 import com.example.demologin.entity.ProductSize;
+import com.example.demologin.exception.BadRequestException;
 import com.example.demologin.exception.NotFoundException;
 import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
@@ -146,8 +147,18 @@ public class ProductServiceImp implements ProductService {
         }
 
         PageUtil pageUtil = new PageUtil(limit, req.getPage());
-        List<ProductInfoDto> products = productRepository.searchProductAllSize(req.getBrands(),req.getCategories(),
-                req.getMinPrice(), req.getMaxPrice(),limit, pageUtil.offset());
+        int totalItems = productRepository.countProductBySize(req.getBrands(),req.getCategories(),
+                req.getMinPrice(), req.getMaxPrice(), req.getSize());
+        if(totalItems == 0) {
+            throw new BadRequestException("List filter product is empty.");
+        }
+
+        if(req.getPage() > pageUtil.totalPage(totalItems)) {
+            throw new BadRequestException("Page requested is higher than total page.");
+        }
+
+        List<ProductInfoDto> products = productRepository.searchProductBySize(req.getBrands(),req.getCategories(),
+                req.getMinPrice(), req.getMaxPrice(), req.getSize(),limit, pageUtil.offset());
 
         return products;
     }

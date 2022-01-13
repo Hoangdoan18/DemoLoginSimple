@@ -62,6 +62,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Create Authentication
         UsernamePasswordAuthenticationToken authenticationObject = getAuthentication(claims);
         if (authenticationObject == null) {
+            log.error("Authentication object null.");
             filterChain.doFilter(request,response);
             return;
         }
