@@ -70,14 +70,15 @@ public class UserController {
         List<OrderInfoDto> returned = orderService.getListOrderReturned(user);
         model.addAttribute("returned", returned);
 
-        List<OrderInfoDto> cancelled = orderService.getListOrderCancelled(user);
-        model.addAttribute("cancelled", cancelled);
+        List<OrderInfoDto> canceled = orderService.getListOrderCanceled(user);
+        model.addAttribute("canceled", canceled);
 
         return "buying-order";
     }
 
-    @PostMapping("api/")
+    @PostMapping("api/cancel-order")
     public String canceltheOrder() {
+
         return null;
     }
 }

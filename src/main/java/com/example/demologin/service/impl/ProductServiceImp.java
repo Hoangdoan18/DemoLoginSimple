@@ -119,12 +119,12 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<ShortProductInfoDto> getAllProduct() {
-        return null;
+        return productRepository.getAllProduct();
     }
 
     @Override
     public List<ShortProductInfoDto> getAvailableProducts() {
-        return null;
+        return productRepository.getAvailableProducts();
     }
 
     @Override

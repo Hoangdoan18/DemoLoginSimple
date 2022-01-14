@@ -1,5 +1,6 @@
 package com.example.demologin.service;
 
+import com.example.demologin.entity.Order;
 import com.example.demologin.entity.User;
 import com.example.demologin.model.dto.OrderInfoDto;
 import org.springframework.stereotype.Service;
@@ -12,5 +13,6 @@ public interface OrderService {
     public List<OrderInfoDto> getListOrderInShipping(User user);
     public List<OrderInfoDto> getListOrderShipped(User user);
     public List<OrderInfoDto> getListOrderReturned(User user);
-    public List<OrderInfoDto> getListOrderCancelled(User user);
+    public List<OrderInfoDto> getListOrderCanceled(User user);
+    public void cancelOrder(long orderid, User user);
 }

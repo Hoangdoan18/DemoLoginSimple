@@ -1,6 +1,7 @@
 package com.example.demologin.repository;
 
 import com.example.demologin.entity.ProductSize;
+import com.example.demologin.entity.ProductSizeId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface ProductSizeRepository extends JpaRepository<ProductSize, Long> {
+public interface ProductSizeRepository extends JpaRepository<ProductSize, ProductSizeId> {
     @Query(nativeQuery = true, value = "SELECT size FROM product_size WHERE product_id = ?1 AND quantity > 0")
     public List<Integer> findAllSizeOfProduct(String id);
 

@@ -5,6 +5,7 @@ import com.example.demologin.entity.ProductSize;
 import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
 import com.example.demologin.model.dto.ShortProductInfoDto;
+import com.example.demologin.model.request.CreateProductReq;
 import com.example.demologin.model.request.FilterProductReq;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +37,5 @@ public interface ProductService {
     List<ShortProductInfoDto> getAvailableProducts();
 
     List<ProductInfoDto> filterProduct(FilterProductReq req);
+
 }
