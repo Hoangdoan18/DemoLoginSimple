@@ -1,5 +1,7 @@
 package com.example.demologin.config;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -20,5 +22,4 @@ public class Swagger2Config {
             .paths(PathSelectors.any())
             .build();
     }
-
 }

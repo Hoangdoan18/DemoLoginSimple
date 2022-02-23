@@ -38,4 +38,5 @@ public interface ProductService {
 
     List<ProductInfoDto> filterProduct(FilterProductReq req);
 
+//    List<Product> searchByCategory(String category);
 }

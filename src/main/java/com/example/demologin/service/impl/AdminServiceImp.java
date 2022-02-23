@@ -2,6 +2,7 @@ package com.example.demologin.service.impl;
 
 import com.example.demologin.entity.Product;
 import com.example.demologin.entity.User;
+import com.example.demologin.model.dto.CategoryInfo;
 import com.example.demologin.model.request.CreateProductReq;
 import com.example.demologin.repository.ProductRepository;
 import com.example.demologin.repository.UserRepository;
@@ -35,4 +36,6 @@ public class AdminServiceImp implements AdminService {
         user.setStatus(status);
         userRepository.save(user);
     }
+
+
 }

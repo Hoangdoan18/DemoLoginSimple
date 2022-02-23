@@ -11,9 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class FilterProductReq {
-    private List<Integer> brands;
+    private List<String> brands;
 
-    private List<Integer> categories;
+    private List<String> categories;
 
     @JsonProperty("min_price")
     private Long minPrice;

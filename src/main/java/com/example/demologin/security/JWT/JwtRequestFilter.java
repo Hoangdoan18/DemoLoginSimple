@@ -33,13 +33,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
          // Get token from header
-        String token;
+        String token = request.getHeader(HEADER);
         Cookie cookie = WebUtils.getCookie(request, "JWT_TOKEN");
         if (cookie != null) {
             token = cookie.getValue();
         } else {
             filterChain.doFilter(request, response);
-            log.error("Cookie null.");
             return;
         }
 
@@ -47,7 +46,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         Claims claims = jwtTokenUtil.getClaimsFromToken(token);
         if (claims == null) {
             filterChain.doFilter(request,response);
-            log.error("Invalid JWT token.");
             return;
         }
 
@@ -55,7 +53,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         Date expiration = claims.getExpiration();
         if (expiration.before(new Date())) {
             filterChain.doFilter(request,response);
-            log.error("Expired JWT token.");
             return;
         }
 

@@ -20,5 +20,7 @@ public class PostInfoDto {
 
     private String publishedAt;
 
-    private String status;
+    private String description;
+
+    private int status;
 }

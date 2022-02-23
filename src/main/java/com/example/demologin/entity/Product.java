@@ -110,7 +110,11 @@ import java.util.List;
                 "FROM product \n" +
                 "INNER JOIN product_category \n" +
                 "ON product.id = product_category.product_id \n" +
-                "WHERE product.is_available = true AND product.brand_id IN (?1) AND product_category.category_id IN (?2)\n" +
+                "INNER JOIN category \n" +
+                "ON category.id = product_category.category_id \n" +
+                "INNER JOIN brand \n" +
+                "ON brand.id = product.brand_id \n" +
+                "WHERE product.is_available = true AND brand.name IN (?1) AND category.name IN (?2)\n" +
                 "AND product.price > ?3 AND product.price < ?4) as d\n" +
                 "INNER JOIN product_size \n" +
                 "ON product_size.product_id = d.id\n" +

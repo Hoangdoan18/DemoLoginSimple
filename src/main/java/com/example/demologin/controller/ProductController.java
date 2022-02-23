@@ -1,5 +1,8 @@
 package com.example.demologin.controller;
 
+import com.example.demologin.entity.Product;
+import com.example.demologin.exception.NotFoundException;
+import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.PostInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
 import com.example.demologin.model.request.FilterProductReq;
@@ -17,8 +20,6 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-    @Autowired
-    private ProductRepository productRepository;
 
     @Autowired
     private ProductService productService;
@@ -45,26 +46,49 @@ public class ProductController {
 
     @GetMapping("/updated-products")
     public ResponseEntity<?> getListUpdatedProducts(){
-        return ResponseEntity.ok(productService.getListNewProducts());
+        List<ProductInfoDto> updatedProduct = productService.getListBestSellerProduct();
+        return ResponseEntity.ok(updatedProduct);
     }
 
     @GetMapping("/bestseller-products")
     public ResponseEntity<?> getListBestSellerProducts(){
-        return ResponseEntity.ok(productService.getListBestSellerProduct());
+        List<ProductInfoDto> bestsellerProducts = productService.getListBestSellerProduct();
+        return ResponseEntity.ok(bestsellerProducts);
     }
 
     @GetMapping("/obosuggest-products")
     public ResponseEntity<?> getListSuggestProducts(){
-        List<ProductInfoDto> products = productService.getListSuggestProduct();
-        return ResponseEntity.ok(products);
+        List<ProductInfoDto> suggestProduct = productService.getListSuggestProduct();
+        return ResponseEntity.ok(suggestProduct);
     }
 
     @GetMapping("/product")
     public ResponseEntity<?> getFilterListProduct(@RequestBody FilterProductReq req) {
-
-        List<ProductInfoDto> products = productService.filterProduct(req);
-        return ResponseEntity.ok(products);
+        List<ProductInfoDto> filterProduct = productService.filterProduct(req);
+        return ResponseEntity.ok(filterProduct);
     }
+
+    @GetMapping("/product/{slug}/{id}")
+    public ResponseEntity<?> getProductDetail(@RequestParam String id, Model model) {
+        DetailProductInfoDto dto = productService.getProductDetailByID(id);
+        if(dto != null) {
+            return ResponseEntity.ok(dto);
+        } else {
+            throw new NotFoundException("Invalid product id.");
+        }
+    }
+
+
+
+//    @GetMapping("/product/search")
+//    public ResponseEntity<?> search(@RequestParam(name = "") String category,@RequestParam(name = "") String size , @RequestParam(name ="") String brandName) {
+//        List<Product> dto = productService.searchByCategory(category);
+//        if(dto != null) {
+//            return ResponseEntity.ok(dto);
+//        } else {
+//            throw new NotFoundException("Invalid product id.");
+//        }
+//    }
 
 
 }

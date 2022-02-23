@@ -24,8 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query(nativeQuery = true, name = "getRelatedProducts")
     public List<ProductInfoDto> getRelatedProducts(String id, int limit);
 
-//    @Query(nativeQuery = true, name = "searchProductByKeyword")
-//    public List<ProductInfoDto> searchProductByKeyword(@Param("keyword") String keyword, @Param("limit") int limit, @Param("offset") int offset);
+    @Query(nativeQuery = true, name = "searchProductByKeyword")
+    public List<ProductInfoDto> searchProductByKeyword(@Param("keyword") String keyword, @Param("limit") int limit, @Param("offset") int offset);
 
     @Query(nativeQuery = true, value = "SELECT count(DISTINCT product.id)\n" +
             "FROM product \n" +
@@ -37,7 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     public int countProductByKeyword(@Param("keyword") String keyword);
 
     @Query(nativeQuery = true, name = "searchProductBySize")
-    public List<ProductInfoDto> searchProductBySize(List<Integer> brands, List<Integer> categories, long minPrice, long maxPrice, List<Integer> sizes, int limit, int offset);
+    public List<ProductInfoDto> searchProductBySize(List<String> brands, List<String> categories, long minPrice, long maxPrice, List<Integer> sizes, int limit, int offset);
 
     @Query(nativeQuery = true, value = "SELECT COUNT(DISTINCT d.id)\n" +
             "FROM (\n" +
@@ -45,12 +45,16 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "FROM product \n" +
             "INNER JOIN product_category \n" +
             "ON product.id = product_category.product_id \n" +
-            "WHERE product.is_available = true AND product.brand_id IN (?1) AND product_category.category_id IN (?2)\n" +
+            "INNER JOIN category \n" +
+            "ON category.id = product_category.category_id \n" +
+            "INNER JOIN brand \n" +
+            "ON brand.id = product.brand_id \n" +
+            "WHERE product.is_available = true AND brand.name IN (?1) AND category.name IN (?2)\n" +
             "AND product.price > ?3 AND product.price < ?4) as d\n" +
             "INNER JOIN product_size \n" +
             "ON product_size.product_id = d.id\n" +
             "WHERE product_size.size IN (?5)")
-    public int countProductBySize(List<Integer> brands, List<Integer> categories, long minPrice, long maxPrice, List<Integer> sizes);
+    public int countProductBySize(List<String> brands, List<String> categories, long minPrice, long maxPrice, List<Integer> sizes);
 
     @Query(nativeQuery = true, name = "searchProductAllSize")
     public List<ProductInfoDto> searchProductAllSize(List<Integer> brands, List<Integer> categories, long minPrice, long maxPrice, int limit, int offset);
@@ -92,4 +96,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query(nativeQuery = true, name = "getAvailableProducts")
     public List<ShortProductInfoDto> getAvailableProducts();
 
+//    long searchByBranName(String brandName);
+//
+//    List<Product> searchProductByBrandId(long brand_id);
 }

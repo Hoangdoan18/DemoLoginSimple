@@ -65,7 +65,7 @@ public class GuestController {
             cookie.setPath("/");
             response.addCookie(cookie);
 
-            return ResponseEntity.ok(principal);
+            return ResponseEntity.ok(token);
         }catch (Exception ex) {
             throw new BadRequestException("Email or password wrong.");
         }

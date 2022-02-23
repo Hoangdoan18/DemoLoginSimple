@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface OrderService {
-    public List<OrderInfoDto> getListOrderWaitingforProduct(User user);
-    public List<OrderInfoDto> getListOrderInShipping(User user);
-    public List<OrderInfoDto> getListOrderShipped(User user);
-    public List<OrderInfoDto> getListOrderReturned(User user);
-    public List<OrderInfoDto> getListOrderCanceled(User user);
-    public void cancelOrder(long orderid, User user);
+    List<OrderInfoDto> getListOrderWaitingforProduct(User user);
+    List<OrderInfoDto> getListOrderInShipping(User user);
+    List<OrderInfoDto> getListOrderShipped(User user);
+    List<OrderInfoDto> getListOrderReturned(User user);
+    List<OrderInfoDto> getListOrderCanceled(User user);
+    Order getOrderbyId(long id);
+    void cancelOrder(long orderid);
 }

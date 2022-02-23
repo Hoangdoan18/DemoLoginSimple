@@ -54,7 +54,7 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/order", "/info/**").authenticated()
+                .antMatchers("/user/**").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
@@ -79,4 +79,5 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
                 .ignoring()
                 .antMatchers("/css/**", "/script/**", "/image/**", "/vendor/**", "/favicon.ico", "/adminlte/**", "/media/static/**");
     }
+
 }

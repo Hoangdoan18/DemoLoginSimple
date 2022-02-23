@@ -41,7 +41,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

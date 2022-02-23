@@ -1,15 +1,21 @@
 package com.example.demologin.security.JWT;
 
 
+import com.example.demologin.entity.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -27,7 +33,6 @@ public class JwtTokenUtil {
     // Generate token
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-
         // 1. Define all claims: issuer, expiration, subject, id
         // 2. Encoding token with HS512 algorithm and secret key
         // 3. Convert to a safe URL String
@@ -35,11 +40,11 @@ public class JwtTokenUtil {
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
+                .claim("role", userDetails.getAuthorities().stream().collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + duration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-
         return PREFIX + token;
     }
 

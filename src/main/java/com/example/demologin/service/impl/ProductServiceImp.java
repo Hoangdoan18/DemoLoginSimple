@@ -15,12 +15,13 @@ import com.example.demologin.service.ProductService;
 import com.example.demologin.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class ProductServiceImp implements ProductService {
     @Autowired
     private ProductRepository productRepository;
@@ -81,7 +82,6 @@ public class ProductServiceImp implements ProductService {
         }
         DetailProductInfoDto dto = ProductMapper.toDetailProductInfoDto(product);
 
-
         return dto;
     }
 
@@ -131,10 +131,10 @@ public class ProductServiceImp implements ProductService {
     public List<ProductInfoDto> filterProduct(FilterProductReq req) {
         int limit = 8;
         if (req.getBrands() == null) {
-            req.setBrands(brandRepository.getAllBrandID());
+            req.setBrands(brandRepository.getAllBrandName());
         }
         if (req.getCategories() == null) {
-            req.setCategories(categoryRepository.getAllCategoryID());
+            req.setCategories(categoryRepository.getAllCategoryName());
         }
         if(req.getSize() == null) {
             req.setSize(productSizeRepository.getAllSize());
@@ -162,4 +162,13 @@ public class ProductServiceImp implements ProductService {
 
         return products;
     }
+
+//    @Override
+//    public List<Product> searchByCategory(String brandName) {
+//        long brand_id = productRepository.searchByBranName(brandName);
+//        List<Product> list = productRepository.searchProductByBrandId(brand_id);
+//        return list;
+//    }
+
+
 }

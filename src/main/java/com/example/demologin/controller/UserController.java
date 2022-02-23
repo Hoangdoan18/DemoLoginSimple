@@ -1,10 +1,13 @@
 package com.example.demologin.controller;
 
+import com.example.demologin.entity.Order;
 import com.example.demologin.entity.User;
+import com.example.demologin.exception.BadRequestException;
 import com.example.demologin.model.dto.OrderInfoDto;
 import com.example.demologin.model.mapper.UserMapper;
 import com.example.demologin.model.request.PasswordUpdateReq;
 import com.example.demologin.model.request.UpdateUserReq;
+import com.example.demologin.repository.OrderRepository;
 import com.example.demologin.repository.UserRepository;
 import com.example.demologin.security.user.CustomUserDetails;
 import com.example.demologin.service.OrderService;
@@ -21,9 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-
+//DONE
 @Controller
-@RequestMapping("")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -76,9 +79,18 @@ public class UserController {
         return "buying-order";
     }
 
-    @PostMapping("api/cancel-order")
-    public String canceltheOrder() {
+    @GetMapping("/api/detail-order/{id}")
+    public String getOrderDetail(Model model, @RequestParam long id) {
+        Order order = orderService.getOrderbyId(id);
+        if(order == null) {
+            return "/error-404";
+        }
+        return "order-detail";
+    }
 
-        return null;
+    @PostMapping("api/account/cancel-order")
+    public ResponseEntity<?> canceltheOrder(@RequestParam long orderid) {
+        orderService.cancelOrder(orderid);
+        return ResponseEntity.ok("Cancel success.");
     }
 }
