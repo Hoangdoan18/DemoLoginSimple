@@ -14,7 +14,6 @@ import com.example.demologin.repository.*;
 import com.example.demologin.service.ProductService;
 import com.example.demologin.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
@@ -59,12 +58,9 @@ public class ProductServiceImp implements ProductService {
     @Override
     public List<ProductInfoDto> getListSuggestProduct() {
         List<Configuration> configs = configurationRepository.findAll();
-        if(configs.size() > 0){
-            Configuration config = configs.get(0);
-            List<ProductInfoDto> product = productRepository.getListSuggestProduct(config.getObo_choices(), 5);
-            return product;
-        }
-        return null;
+        Configuration config = configs.get(0);
+        List<ProductInfoDto> product = productRepository.getListSuggestProduct(config.getObo_choices(), 5);
+        return product;
     }
 
     @Override
@@ -169,6 +165,4 @@ public class ProductServiceImp implements ProductService {
 //        List<Product> list = productRepository.searchProductByBrandId(brand_id);
 //        return list;
 //    }
-
-
 }

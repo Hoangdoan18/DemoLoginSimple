@@ -12,11 +12,12 @@ import com.example.demologin.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 
-@Component
+@Service
 public class UserServiceImp implements UserService {
 
     @Autowired

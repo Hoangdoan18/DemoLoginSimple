@@ -1,15 +1,13 @@
 package com.example.demologin.controller;
 
-import com.example.demologin.entity.Product;
 import com.example.demologin.exception.NotFoundException;
 import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.PostInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
 import com.example.demologin.model.request.FilterProductReq;
-import com.example.demologin.repository.ProductRepository;
+import com.example.demologin.service.PostService;
 import com.example.demologin.service.ProductService;
 
-import com.example.demologin.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,10 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class ProductController {
+@RequestMapping("")
+public class ShopController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private PostService postService;
 
     @GetMapping("/")
     public String indexPage(Model model){
@@ -39,8 +41,8 @@ public class ProductController {
         model.addAttribute("suggest", suggest);
 
         //Newest Post
-        List<PostInfoDto> posts;
-        model.addAttribute("suggest", suggest);
+        List<PostInfoDto> posts = postService.getLastestPost();
+        model.addAttribute("posts", posts);
         return "index";
     }
 
@@ -69,7 +71,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{slug}/{id}")
-    public ResponseEntity<?> getProductDetail(@RequestParam String id, Model model) {
+    public ResponseEntity<?> getProductDetail(@PathVariable String id, Model model) {
         DetailProductInfoDto dto = productService.getProductDetailByID(id);
         if(dto != null) {
             return ResponseEntity.ok(dto);

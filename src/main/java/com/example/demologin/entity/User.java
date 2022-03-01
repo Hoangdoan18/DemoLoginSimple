@@ -57,6 +57,9 @@ public class User implements Serializable {
     @Column(name = "status", columnDefinition = "BOOLEAN NOT NULL")
     private boolean status;
 
+    @Column(name = "email_checked", columnDefinition = "INT DEFAULT 0")
+    private int emailChecked;
+
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 //    @OneToOne

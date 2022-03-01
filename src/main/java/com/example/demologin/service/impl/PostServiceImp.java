@@ -2,6 +2,7 @@ package com.example.demologin.service.impl;
 
 import com.example.demologin.entity.Post;
 import com.example.demologin.model.dto.PostInfoDto;
+import com.example.demologin.model.dto.PostViewDto;
 import com.example.demologin.repository.PostRepository;
 import com.example.demologin.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -33,11 +34,25 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public PostInfoDto getPostbyId(long id) {
+    public PostViewDto getPostbyId(long id) {
         Optional<Post> post = postRepository.findById(id);
         if(post == null || post.get().getStatus() == 0)
             return null;
-        PostInfoDto result = mapper.map(post.get(), PostInfoDto.class);
+        PostViewDto result = mapper.map(post.get(), PostViewDto.class);
+        return result;
+    }
+
+    @Override
+    public List<PostInfoDto> getLatestPostsExceptId(long id) {
+        List<Post> list = postRepository.getLatestPostsNotId(PUBLIC_POST,id,5);
+        List<PostInfoDto> result = list.stream().map(n -> mapper.map(n,PostInfoDto.class)).collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public List<PostInfoDto> getLastestPost() {
+        List<Post> list = postRepository.getLatestPosts(PUBLIC_POST, LIMIT_POST_PER_PAGE);
+        List<PostInfoDto> result = list.stream().map(n -> mapper.map(n, PostInfoDto.class)).collect(Collectors.toList());
         return result;
     }
 }

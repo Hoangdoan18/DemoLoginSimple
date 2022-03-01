@@ -7,8 +7,6 @@ import com.example.demologin.model.request.PasswordUpdateReq;
 import com.example.demologin.model.request.UpdateUserReq;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public interface UserService {
     User createUser(CreateUserReq req);

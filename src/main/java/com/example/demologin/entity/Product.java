@@ -185,6 +185,7 @@ public class Product {
     @Column(name = "price")
     private long price;
 
+    // @Type to allow List in database
     @Type(type = "json")
     @Column(name = "onfeet_images",columnDefinition = "json")
     private List<String> onfeetImages;

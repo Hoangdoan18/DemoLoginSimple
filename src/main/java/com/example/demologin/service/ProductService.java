@@ -5,14 +5,10 @@ import com.example.demologin.entity.ProductSize;
 import com.example.demologin.model.dto.DetailProductInfoDto;
 import com.example.demologin.model.dto.ProductInfoDto;
 import com.example.demologin.model.dto.ShortProductInfoDto;
-import com.example.demologin.model.request.CreateProductReq;
 import com.example.demologin.model.request.FilterProductReq;
-import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
-@Service
 public interface ProductService {
     Product addProduct(Product product);
 

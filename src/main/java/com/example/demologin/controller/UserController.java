@@ -93,4 +93,9 @@ public class UserController {
         orderService.cancelOrder(orderid);
         return ResponseEntity.ok("Cancel success.");
     }
+
+    @PostMapping("/api/verify-email")
+    public ResponseEntity<?> verifyEmail() {
+        return null;
+    }
 }
